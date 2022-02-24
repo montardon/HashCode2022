@@ -49,13 +49,17 @@ public class Solveur {
                 projectResult.contributors.forEach(c -> dayOfAvailability.put(c, end));
 
                 for (int i = 0; i < projectResult.contributors.size(); i++) {
-                        int level = projectResult.project.skills.get(i).level;
+                    final Skill skillProject = projectResult.project.skills.get(i);
+                    int level = skillProject.level;
                     final Contributor contributor = projectResult.contributors.get(i);
+
+                    int idx = contributor.skills.indexOf(skillProject);
+                    final Skill skillContrib = contributor.skills.get(idx);
                     if (
-                                contributor.skills.get(i).level == level
-                                || contributor.skills.get(i).level == level - 1
+                                skillContrib.level == level
+                                || skillContrib.level == level - 1
                         ) {
-                            contributor.skills.get(i).level ++;
+                            skillContrib.level ++;
                         }
                 }
 
