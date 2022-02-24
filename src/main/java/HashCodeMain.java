@@ -18,8 +18,11 @@ public class HashCodeMain {
                         config.parseFromFile(f.toFile());
                         Solveur solveur = new Solveur();
                         List<ProjectResult> res = solveur.solve(config.contributors, config.projects);
-                        config.createOutputFile(res, f.toString().replace("in, "out"));
-                    } catch (IOException e) {
+                        final long result = new Simulateur().calculPoints(res, config.contributors);
+                        System.out.println(f.getFileName().toAbsolutePath().toString() + " -> Points = " + result);
+                        config.createOutputFile(res, f.toString().replace("in", "out"));
+                    }
+                    catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
