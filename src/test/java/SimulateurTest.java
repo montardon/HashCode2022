@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -26,7 +27,14 @@ class SimulateurTest {
         maria.name = "Maria";
         maria.skills = List.of(cpp);
 
+        ProjectResult pR = new ProjectResult();
+        pR.contributors = List.of(maria);
+        pR.project = logging;
+
         final Simulateur simulateur = new Simulateur();
-        simulateur.calculPoints();
+
+        long result = simulateur.calculPoints(List.of(pR), List.of(maria));
+
+        Assertions.assertEquals(5, result);
     }
 }
