@@ -16,11 +16,11 @@ public class Simulateur {
         for (ProjectResult prj : projects) {
             int start = prj.contributors.stream().map(dayOfAvailability::get).max(Comparator.naturalOrder()).get();
 
-            int end = start + prj.project.duration;
+            int end = start + prj.project.duration - 1;
 
             int prjScore = Math.max(0, prj.project.score - (end + 1 - prj.project.bestBefore));
 
-            LOGGER.info("Project " + prj.project.name + " = (" + start + "/" + end + ")" + prjScore);
+            LOGGER.info("Project " + prj.project.name + " = (" + start + "/" + end + ") " + prjScore);
 
             prj.contributors.forEach(p -> dayOfAvailability.put(p, end+1));
 
