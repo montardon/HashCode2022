@@ -22,7 +22,7 @@ public class Simulateur {
 
             int prjScore = Math.max(0, prj.project.score - (end + 1 - prj.project.bestBefore));
 
-            LOGGER.info("Project " + prj.project.name + " = (" + start + "/" + end + ") " + prjScore);
+            //LOGGER.info("Project " + prj.project.name + " = (start = " + start + "/ end =" + end + ") " + prjScore);
 
             prj.contributors.forEach(p -> dayOfAvailability.put(p, end+1));
 

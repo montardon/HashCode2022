@@ -21,9 +21,10 @@ public class Solveur {
             List<Contributor> currentContribs = new ArrayList<>(contributors);
 
             for (Skill skill : p.skills) {
+                final boolean mentor = projectResult.contributors.stream().anyMatch(c -> c.skills.stream().anyMatch(s -> s.name.equals(skill.name) && s.level >= skill.level));
                 Optional<Contributor> contrib = contributors.stream()
                         .filter(c -> c.skills.stream()
-                                .anyMatch(s -> s.name.equals(skill.name) && s.level >= skill.level))
+                                .anyMatch(s -> s.name.equals(skill.name) && (s.level >= skill.level || (mentor && s.level + 1 >= skill.level)) ))
                         .sorted(Comparator.comparingInt(c -> dayOfAvailability.get(c)))
                         .findAny();
 
@@ -38,12 +39,16 @@ public class Solveur {
             }
 
             if (projectResult.contributors.size() == p.skills.size()) {
-                int start = projectResult.contributors.stream().map(dayOfAvailability::get).max(Comparator.naturalOrder()).get();
+                int start = projectResult.contributors.stream()
+                        .map(c -> dayOfAvailability.getOrDefault(c, 0))
+                        .max(Comparator.naturalOrder()).get();
 
                 int end = start + projectResult.project.duration - 1;
 
                 results.add(projectResult);
                 projectResult.contributors.forEach(c -> dayOfAvailability.put(c, end));
+
+
             } else {
                 LOGGER.warning(p.name + " pas possible d'avoir ces skills");
             }
