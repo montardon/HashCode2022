@@ -46,7 +46,7 @@ public class Solveur {
                         .findAny();
 
                 if (contrib.isEmpty()) {
-                    LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + " !!!!!!!!!!!!!!!!!!!!");
+                    LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + "("+ skill.level + ") !!!!!!!!!!!!!!!!!!!!");
                     break;
                 } else {
                     LOGGER.info("project " + p.name + " "  + contrib.get().name + " pour " + skill.name);
