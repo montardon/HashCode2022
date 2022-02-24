@@ -21,7 +21,10 @@ public class Solveur {
             List<Contributor> currentContribs = new ArrayList<>(contributors);
 
             for (Skill skill : p.skills) {
-                Optional<Contributor> contrib = contributors.stream().filter(c -> c.skills.stream().anyMatch(s -> s.level >= skill.level)).findAny();
+                Optional<Contributor> contrib = contributors.stream()
+                        .filter(c -> c.skills.stream()
+                                .anyMatch(s -> s.name.equals(skill.name) && s.level >= skill.level))
+                        .findAny();
 
                 if (contrib.isEmpty()) {
                     LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + " !!!!!!!!!!!!!!!!!!!!");
