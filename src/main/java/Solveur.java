@@ -22,7 +22,7 @@ public class Solveur {
             });
         }
 
-        projects.sort(Comparator.comparingInt(p -> p.score - p.duration - p.skills.size()));
+        projects.sort(Comparator.comparingDouble(p -> p.score - p.duration - p.skills.size() - p.skills.stream().mapToInt(s->s.level).summaryStatistics().getAverage()));
 
         Map<Contributor, Integer> dayOfAvailability = new HashMap<>();
         contributors.forEach(p -> dayOfAvailability.put(p, 0));
