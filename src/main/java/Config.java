@@ -45,10 +45,10 @@ public class Config {
                     int nbRoles = Integer.parseInt(lineProj[4]);
                     for (int r = 0; r < nbRoles; ++r) {
                         String[] line = scan.nextLine().split(" ");
-                        Project.Role role = new Project.Role();
+                        Skill role = new Skill();
                         role.name = line[0];
-                        role.minLevel = Integer.parseInt(line[1]);
-                        proj.roles.add(role);
+                        role.level = Integer.parseInt(line[1]);
+                        proj.skills.add(role);
                     }
                     projects.add(proj);
                 }
