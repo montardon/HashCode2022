@@ -1,17 +1,18 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
 public class HashCodeMain {
     
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Config config = new Config();
-        config.parseFromFile("/home/jlacoste/CODE/HashCode/a_an_example.in.txt");
+        String file = "/home/jlacoste/CODE/HashCode/a_an_example.in.txt";
+        config.parseFromFile(file);
+
+        //
+        Solveur solveur = new Solveur();
+        List<ProjectResult>  res = solveur.solve(config.contributors, config.projects);
+
+        config.createOutputFile(res, file + ".out");
     }   
 
 }

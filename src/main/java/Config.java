@@ -1,6 +1,5 @@
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +8,21 @@ import java.util.Scanner;
 public class Config {
     public List<Contributor> contributors = new ArrayList<>();
     public List<Project> projects = new ArrayList<>();
+
+    public void createOutputFile(List<ProjectResult> res, String outFile) throws IOException {
+        FileWriter fileWriter = new FileWriter(outFile);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(res.size());
+        for (ProjectResult pr : res) {
+            printWriter.println(pr.project.name);
+            for (int idx = 0 ; idx < pr.contributors.size() ; ++idx) {
+                printWriter.print(pr.contributors.get(idx).name);
+                if (idx < pr.contributors.size() - 1) printWriter.print(" ");
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+    }
 
     public void parseFromFile(String file) throws FileNotFoundException {
         int nbProject = 0;
