@@ -27,6 +27,8 @@ public class Config {
     public void parseFromFile(String file) throws FileNotFoundException {
         int nbProject = 0;
         int nbContrib = 0;
+        contributors.clear();
+        projects.clear();
         try (Scanner scan = new Scanner(new File(file))) {
             while (scan.hasNextLine()) {
                 int[] nbs = Arrays.stream(scan.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
