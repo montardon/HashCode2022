@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Solveur {
@@ -9,6 +6,9 @@ public class Solveur {
 
     public List<ProjectResult> solve(List<Contributor> contributors, List<Project> projects) {
         projects.sort(Comparator.comparingInt(p -> p.score));
+
+        Map<Contributor, Integer> dayOfAvailability = new HashMap<>();
+        contributors.forEach(p -> dayOfAvailability.put(p, 0));
 
         List<ProjectResult> results = new ArrayList<>();
 
@@ -24,6 +24,7 @@ public class Solveur {
                 Optional<Contributor> contrib = contributors.stream()
                         .filter(c -> c.skills.stream()
                                 .anyMatch(s -> s.name.equals(skill.name) && s.level >= skill.level))
+                        .sorted(Comparator.comparingInt(c -> dayOfAvailability.get(c)))
                         .findAny();
 
                 if (contrib.isEmpty()) {
@@ -37,7 +38,12 @@ public class Solveur {
             }
 
             if (projectResult.contributors.size() == p.skills.size()) {
+                int start = projectResult.contributors.stream().map(dayOfAvailability::get).max(Comparator.naturalOrder()).get();
+
+                int end = start + projectResult.project.duration - 1;
+
                 results.add(projectResult);
+                projectResult.contributors.forEach(c -> dayOfAvailability.put(c, end));
             } else {
                 LOGGER.warning(p.name + " pas possible d'avoir ces skills");
             }
