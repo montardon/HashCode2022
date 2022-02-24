@@ -55,7 +55,7 @@ public class Solveur {
                                 contributor.skills.get(i).level == level
                                 || contributor.skills.get(i).level == level - 1
                         ) {
-                            contributors.get(contributors.indexOf(contributor)).skills.get(i).level ++;
+                            contributor.skills.get(i).level ++;
                         }
                 }
 
