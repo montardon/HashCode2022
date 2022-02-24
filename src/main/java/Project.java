@@ -6,10 +6,5 @@ public class Project {
     public int duration;
     public int score;
     public int bestBefore;
-    public List<Role> roles = new ArrayList<>();
-
-    public static class Role {
-        public String name;
-        public int minLevel;
-    }
+    public List<Skill> skills = new ArrayList<>();
 }
