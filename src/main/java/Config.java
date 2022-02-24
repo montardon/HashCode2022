@@ -1,3 +1,4 @@
+package main.java;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Config {
     public void parseFromFile(String file) throws FileNotFoundException {
         int nbProject = 0;
         int nbContrib = 0;
-        try (Scanner scan = new Scanner(new File("/home/jlacoste/CODE/HashCode/a_an_example.in.txt"))) {
+        try (Scanner scan = new Scanner(new File(file))) {
             while (scan.hasNextLine()) {
                 int[] nbs = Arrays.stream(scan.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
                 nbContrib = nbs[0];
