@@ -18,7 +18,7 @@ public class HashCodeMain {
                         Solveur solveur = new Solveur();
                         List<ProjectResult> res = solveur.solve(config.contributors, config.projects);
                         final long result = new Simulateur().calculPoints(res, config.contributors);
-                        System.out.println("-> Points = " + result);
+                        System.out.println(f.getFileName().toAbsolutePath().toString() + " -> Points = " + result);
 
                         config.createOutputFile(res, f + ".out");
                     } catch (IOException e) {
