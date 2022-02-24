@@ -54,13 +54,20 @@ public class Solveur {
                     final Contributor contributor = projectResult.contributors.get(i);
 
                     int idx = contributor.skills.indexOf(skillProject);
-                    final Skill skillContrib = contributor.skills.get(idx);
-                    if (
+                    if (idx < 0) {
+                        final Skill s = new Skill();
+                        s.level = 1;
+                        s.name = skillProject.name;
+                        contributor.skills.add(s);
+                    } else {
+                        final Skill skillContrib = contributor.skills.get(idx);
+                        if (
                                 skillContrib.level == level
-                                || skillContrib.level == level - 1
+                                        || skillContrib.level == level - 1
                         ) {
-                            skillContrib.level ++;
+                            skillContrib.level++;
                         }
+                    }
                 }
 
             } else {
