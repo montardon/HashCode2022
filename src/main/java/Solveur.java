@@ -48,6 +48,16 @@ public class Solveur {
                 results.add(projectResult);
                 projectResult.contributors.forEach(c -> dayOfAvailability.put(c, end));
 
+                for (int i = 0; i < projectResult.contributors.size(); i++) {
+                        int level = projectResult.project.skills.get(i).level;
+                    final Contributor contributor = projectResult.contributors.get(i);
+                    if (
+                                contributor.skills.get(i).level == level
+                                || contributor.skills.get(i).level == level - 1
+                        ) {
+                            contributors.get(contributors.indexOf(contributor)).skills.get(i).level ++;
+                        }
+                }
 
             } else {
                 LOGGER.warning(p.name + " pas possible d'avoir ces skills");
