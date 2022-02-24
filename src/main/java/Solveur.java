@@ -53,7 +53,7 @@ public class Solveur {
                         .findAny();
 
                 if (contrib.isEmpty()) {
-                    LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + "(" + skill.level + ") !!!!!!!!!!!!!!!!!!!!");
+                    //LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + "(" + skill.level + ") !!!!!!!!!!!!!!!!!!!!");
                     break;
                 } else {
                     LOGGER.info("project " + p.name + " " + contrib.get().name + " pour " + skill.name);
@@ -95,12 +95,13 @@ public class Solveur {
                 }
 
             } else {
-                LOGGER.warning(p.name + " pas possible d'avoir ces skills");
+                //LOGGER.warning(p.name + " pas possible d'avoir ces skills");
                 notManaged.add(p);
             }
 
             }
-        } while (notManaged.size() > 0 || notManaged.size() != previousSize);
+            LOGGER.warning("Not managed :  " + notManaged.size() + " Previous not managed " + previousSize);
+        } while (notManaged.size() > 0 && notManaged.size() != previousSize);
 
         return results;
     }
