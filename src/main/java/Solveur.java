@@ -1,10 +1,27 @@
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Solveur {
     private static Logger LOGGER = Logger.getLogger(Solveur.class.toString());
 
     public List<ProjectResult> solve(List<Contributor> contributors, List<Project> projects) {
+        Set<String> skills = projects.stream().flatMap(p -> p.skills.stream().map(s -> s.name))
+                        .collect(Collectors.toSet());
+
+        for (Contributor contributor : contributors) {
+            final Set<String> skillsContrib = contributor.skills.stream().map(s -> s.name).collect(Collectors.toSet());
+            Set<String> toAdd = new HashSet<>(skills);
+            toAdd.removeAll(skillsContrib);
+
+            toAdd.forEach(s -> {
+                Skill skill = new Skill();
+                skill.name = s;
+                skill.level = 0;
+                contributor.skills.add(skill);
+            });
+        }
+
         projects.sort(Comparator.comparingInt(p -> p.score - p.duration - p.skills.size()));
 
         Map<Contributor, Integer> dayOfAvailability = new HashMap<>();
