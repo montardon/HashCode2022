@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class Simulateur {
         long score = 0;
 
         for (ProjectResult prj : projects) {
-            int start = prj.contributors.stream().map(dayOfAvailability::get).max().get();
+            int start = prj.contributors.stream().map(dayOfAvailability::get).max(Comparator.naturalOrder()).get();
 
             int end = start + prj.project.duration;
 
