@@ -5,7 +5,7 @@ public class Solveur {
     private static Logger LOGGER = Logger.getLogger(Solveur.class.toString());
 
     public List<ProjectResult> solve(List<Contributor> contributors, List<Project> projects) {
-        projects.sort(Comparator.comparingInt(p -> p.score));
+        projects.sort(Comparator.comparingInt(p -> p.score - p.duration - p.skills.size()));
 
         Map<Contributor, Integer> dayOfAvailability = new HashMap<>();
         contributors.forEach(p -> dayOfAvailability.put(p, 0));
