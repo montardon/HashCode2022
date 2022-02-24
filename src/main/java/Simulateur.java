@@ -14,7 +14,9 @@ public class Simulateur {
         long score = 0;
 
         for (ProjectResult prj : projects) {
-            int start = prj.contributors.stream().map(dayOfAvailability::get).max(Comparator.naturalOrder()).get();
+            int start = prj.contributors.stream()
+                    .map(c -> dayOfAvailability.getOrDefault(c, 0))
+                    .max(Comparator.naturalOrder()).get();
 
             int end = start + prj.project.duration - 1;
 
