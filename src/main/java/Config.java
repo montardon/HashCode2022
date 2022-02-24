@@ -24,12 +24,12 @@ public class Config {
         printWriter.close();
     }
 
-    public void parseFromFile(String file) throws FileNotFoundException {
+    public void parseFromFile(File file) throws FileNotFoundException {
         int nbProject = 0;
         int nbContrib = 0;
         contributors.clear();
         projects.clear();
-        try (Scanner scan = new Scanner(new File(file))) {
+        try (Scanner scan = new Scanner(file)) {
             while (scan.hasNextLine()) {
                 int[] nbs = Arrays.stream(scan.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
                 nbContrib = nbs[0];

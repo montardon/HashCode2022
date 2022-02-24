@@ -12,12 +12,13 @@ public class HashCodeMain {
         Config config = new Config();
         try (Stream<Path> paths = Files.walk(Paths.get("/home/jlacoste/CODE/HashCode/"))) {
             paths.filter(Files::isRegularFile).forEach(f -> {
-                if (f.getFileName().endsWith(".in.txt")) {
+                String name = f.getFileName().toString();
+                if (name.endsWith(".in.txt")) {
                     try {
-                        config.parseFromFile(f.getFileName().toAbsolutePath().toString());
+                        config.parseFromFile(f.toFile());
                         Solveur solveur = new Solveur();
                         List<ProjectResult> res = solveur.solve(config.contributors, config.projects);
-                        config.createOutputFile(res, f + ".out");
+                        config.createOutputFile(res, f.toString().replace("in, "out"));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
