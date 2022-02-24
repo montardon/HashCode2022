@@ -28,8 +28,15 @@ public class Solveur {
         contributors.forEach(p -> dayOfAvailability.put(p, 0));
 
         List<ProjectResult> results = new ArrayList<>();
+        List<Project> notManaged = projects;
 
-        for (Project p : projects) {
+        int previousSize = 0;
+        do {
+            List<Project> current = notManaged;
+            previousSize = current.size();
+            notManaged = new ArrayList<>();
+
+        for (Project p : current) {
             final ProjectResult projectResult = new ProjectResult();
 
             projectResult.project = p;
@@ -41,15 +48,15 @@ public class Solveur {
                 final boolean mentor = projectResult.contributors.stream().anyMatch(c -> c.skills.stream().anyMatch(s -> s.name.equals(skill.name) && s.level >= skill.level));
                 Optional<Contributor> contrib = contributors.stream()
                         .filter(c -> c.skills.stream()
-                                .anyMatch(s -> s.name.equals(skill.name) && (s.level >= skill.level || (mentor && s.level + 1 >= skill.level)) ))
+                                .anyMatch(s -> s.name.equals(skill.name) && (s.level >= skill.level || (mentor && s.level + 1 >= skill.level))))
                         .sorted(Comparator.comparingInt(c -> dayOfAvailability.get(c)))
                         .findAny();
 
                 if (contrib.isEmpty()) {
-                    LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + "("+ skill.level + ") !!!!!!!!!!!!!!!!!!!!");
+                    LOGGER.warning("project " + p.name + " aucun contrib pour " + skill.name + "(" + skill.level + ") !!!!!!!!!!!!!!!!!!!!");
                     break;
                 } else {
-                    LOGGER.info("project " + p.name + " "  + contrib.get().name + " pour " + skill.name);
+                    LOGGER.info("project " + p.name + " " + contrib.get().name + " pour " + skill.name);
                     projectResult.contributors.add(contrib.get());
                     contributors.remove(contrib.get());
                 }
@@ -89,9 +96,11 @@ public class Solveur {
 
             } else {
                 LOGGER.warning(p.name + " pas possible d'avoir ces skills");
+                notManaged.add(p);
             }
 
-        }
+            }
+        } while (notManaged.size() > 0 || notManaged.size() != previousSize);
 
         return results;
     }

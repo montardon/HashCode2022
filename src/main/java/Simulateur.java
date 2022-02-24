@@ -27,7 +27,7 @@ public class Simulateur {
             prj.contributors.forEach(p -> dayOfAvailability.put(p, end+1));
 
             score += prjScore;
-            LOGGER.info("Total score = " + score);
+            //LOGGER.info("Total score = " + score);
         }
 
         return score;
